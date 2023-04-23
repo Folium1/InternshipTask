@@ -1,7 +1,7 @@
 package entities
 
 type Book struct {
-	ID          uint   `gorm:"primary_key"`
-	Title       string `gorm:"type:varchar(100)"`
-	Author      string `gorm:"type:varchar(100)"`
+	ID          int   `gorm:"primary_key" json:"id"`
+	Title       string `gorm:"type:varchar(100)" json:"title"`
+	Author      string `gorm:"type:varchar(100)" json:"author"`
 }
