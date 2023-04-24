@@ -2,7 +2,6 @@ package config
 
 import (
 	dto "book/DTO"
-	"fmt"
 	"log"
 	"os"
 
@@ -16,14 +15,8 @@ import (
 var Logger *zap.Logger
 
 func Init() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Println(err)
-	}
-	mysqlConn := os.Getenv("MYSQL")
-	fmt.Println(mysqlConn)
 	db := ConnectDb()
-	err = db.AutoMigrate(&dto.BookDTO{})
+	err := db.AutoMigrate(&dto.BookDTO{})
 	if err != nil {
 		log.Println(err)
 	}
@@ -36,7 +29,6 @@ func Init() {
 		ErrorOutputPaths: []string{"stderr"},
 		EncoderConfig: zapcore.EncoderConfig{
 			MessageKey: "msg",
-			// LevelKey:   zap.NewAtomicLevel().String(),
 			TimeKey: "time",
 
 			EncodeTime:   zapcore.ISO8601TimeEncoder,
@@ -63,6 +55,10 @@ func Init() {
 }
 
 func ConnectDb() *gorm.DB {
+	err := godotenv.Load()
+	if err != nil {
+		log.Println(err)
+	}
 	mysqlConn := os.Getenv("MYSQL")
 	db, err := gorm.Open(mysql.New(mysql.Config{
 		DSN:               mysqlConn,
