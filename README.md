@@ -1,5 +1,5 @@
 ## Start the application
-1.Copy the key for your mysql db source to __MYSQL__ variable <br>
+1.Copy the key for your mysql db source to __MYSQL__ variable in .env file<br>
 2.Start mysql server. <br>
 3.Run ```go run main.go```  <br>
 Requests:<br>
