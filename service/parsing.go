@@ -1,12 +1,11 @@
 package service
 
 import (
-	dto "book/DTO"
-	"book/entities"
+	models "book/models"
 	"encoding/json"
 )
 
-func parseToDb[t dto.BookDTO](dtoData t, dbData *entities.Book) error {
+func parseToDb[t models.Book](dtoData t, dbData *models.Book) error {
 	data, err := json.Marshal(dtoData)
 	if err != nil {
 		return err
@@ -18,7 +17,7 @@ func parseToDb[t dto.BookDTO](dtoData t, dbData *entities.Book) error {
 	return nil
 }
 
-func parseToDTO[t dto.BookDTO ](dbData entities.Book, dtoData *t) error {
+func parseToDTO[t models.Book ](dbData models.Book, dtoData *t) error {
 	data, err := json.Marshal(dbData)
 	if err != nil {
 		return err
