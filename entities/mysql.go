@@ -2,21 +2,26 @@ package entities
 
 import (
 	"book/config"
+	"book/models"
 )
 
 type BookInterface interface {
-	Create(newBook Book) (int, error)
-	Get(id string) (Book, error)
-	GetAll() []Book
+	Create(newBook models.Book) (int, error)
+	Get(id string) (models.Book, error)
+	GetAll() []models.Book
 	Delete(id string) error
-	Update(newData Book) error
+	Update(newData models.Book) error
+}
+
+type Book struct {
+	models.Book
 }
 
 func NewBook() BookInterface {
 	return &Book{}
 }
 
-func (b Book) Create(newBook Book) (int, error) {
+func (b Book) Create(newBook models.Book) (int, error) {
 	db := config.ConnectDb()
 	err := db.Create(&newBook).Error
 	if err != nil {
@@ -25,16 +30,16 @@ func (b Book) Create(newBook Book) (int, error) {
 	return newBook.ID, nil
 }
 
-func (b Book) Get(id string) (Book, error) {
+func (b Book) Get(id string) (models.Book, error) {
 	db := config.ConnectDb()
-	var book Book
+	var book models.Book
 	err := db.Where("id = ?", id).First(&book).Error
 	return book, err
 }
 
-func (b Book) GetAll() []Book {
+func (b Book) GetAll() []models.Book {
 	db := config.ConnectDb()
-	var books []Book
+	var books []models.Book
 	db.Find(&books)
 	return books
 }
@@ -48,7 +53,7 @@ func (b Book) Delete(id string) error {
 	return nil
 }
 
-func (b Book) Update(newData Book) error {
+func (b Book) Update(newData models.Book) error {
 	db := config.ConnectDb()
 	err := db.Where("id = ?", newData.ID).Updates(newData).Error
 	if err != nil {
