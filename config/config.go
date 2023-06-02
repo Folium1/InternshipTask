@@ -1,7 +1,7 @@
 package config
 
 import (
-	dto "book/DTO"
+	models "book/models"
 	"log"
 	"os"
 
@@ -16,7 +16,7 @@ var Logger *zap.Logger
 
 func Init() {
 	db := ConnectDb()
-	err := db.AutoMigrate(&dto.BookDTO{})
+	err := db.AutoMigrate(&models.Book{})
 	if err != nil {
 		log.Println(err)
 	}
@@ -29,7 +29,7 @@ func Init() {
 		ErrorOutputPaths: []string{"stderr"},
 		EncoderConfig: zapcore.EncoderConfig{
 			MessageKey: "msg",
-			TimeKey: "time",
+			TimeKey:    "time",
 
 			EncodeTime:   zapcore.ISO8601TimeEncoder,
 			EncodeLevel:  zapcore.CapitalLevelEncoder,
