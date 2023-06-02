@@ -36,6 +36,8 @@ func Book(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, nil)
 		return
 	}
+	config.Logger.Info(fmt.Sprintf("Request to get book by id:%v", bookId))
+
 	book, err := bookService.Get(bookId)
 	if err != nil {
 		config.Logger.Error(fmt.Sprintf("Coudn't get book by it's id,err: %v", err))
@@ -46,6 +48,7 @@ func Book(ctx *gin.Context) {
 }
 
 func Books(ctx *gin.Context) {
+	config.Logger.Info(fmt.Sprintf("Request to get all books"))
 	books, err := bookService.GetAll()
 	if err != nil {
 		config.Logger.Error(fmt.Sprintf("Couldn't get all books,err: %v", err))
@@ -56,6 +59,7 @@ func Books(ctx *gin.Context) {
 }
 
 func Create(ctx *gin.Context) {
+	config.Logger.Info(fmt.Sprintf("Request to create new book"))
 	var book models.Book
 	err := ctx.ShouldBindJSON(&book)
 	if err != nil {
@@ -79,6 +83,7 @@ func Update(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, nil)
 		return
 	}
+	config.Logger.Info(fmt.Sprintf("Request to update book:%v", id))
 	intId, err := strconv.Atoi(id)
 	if err != nil {
 		config.Logger.Error(fmt.Sprintf("Couldn't convert id from string to int,err: %v", err))
@@ -105,6 +110,7 @@ func Delete(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, nil)
 		return
 	}
+	config.Logger.Info(fmt.Sprintf("Request to delete book:%v", id))
 	err := bookService.Delete(id)
 	if err != nil {
 		config.Logger.Error(fmt.Sprintf("Couldn't delete book from db,err:%v", err))
